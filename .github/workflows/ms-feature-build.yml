@@ -59,27 +59,20 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
 
+      - name: Restore packages
+        run: |
+          cd services/${{ needs.prepare-pr-build.outputs.microservice-name }} &&
+          dotnet restore
+
       - name: Build MS
         run: |
           cd services/${{ needs.prepare-pr-build.outputs.microservice-name }} &&
-          dotnet build
+          dotnet build --configuration Release --no-restore
 
       - name: Run unit tests
         run: |
           cd services/${{ needs.prepare-pr-build.outputs.microservice-name }} &&
-          dotnet test
-
-      - name: Share status
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const {owner, repo} = context.issue
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Build ${{ needs.prepare-pr-build.outputs.microservice-name }} completed',
-            });
+          dotnet test --no-restore
 
   success:
     runs-on: ubuntu-latest
