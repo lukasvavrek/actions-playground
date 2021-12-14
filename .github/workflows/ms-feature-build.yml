@@ -1,15 +1,13 @@
 name: MS - feature build
 
 on:
-  issue_comment:
-    types:
-      - created
+  pull_request:
+    branches:
+      - main
 
 jobs:
   prepare-pr-build:
     runs-on: ubuntu-latest
-
-    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'build') }}
 
     outputs:
       microservice-name: ${{ steps.parse-ms-name.outputs.ms-name }}
@@ -18,17 +16,6 @@ jobs:
       - name: Parse microservice name
         id: parse-ms-name
         run: echo "::set-output name=ms-name::Ordering"
-      - name: Mark comment
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const {owner, repo} = context.issue
-            github.reactions.createForIssueComment({
-              owner,
-              repo,
-              comment_id: context.payload.comment.id,
-              content: "+1",
-            });
 
   build:
     runs-on: ubuntu-latest
