@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'build' }}
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'build') }}
 
     steps:
       - name: Get PR SHA
