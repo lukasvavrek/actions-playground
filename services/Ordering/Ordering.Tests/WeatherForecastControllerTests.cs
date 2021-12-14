@@ -18,9 +18,9 @@ namespace Ordering.Tests
         {
             var logger = new Mock<ILogger<WeatherForecastController>>();
             var controller = new WeatherForecastController(logger.Object);
-            
+
             var result = controller.Get();
-            
+
             Assert.That(result.Count() == 5);
         }
     }
