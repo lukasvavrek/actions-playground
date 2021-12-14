@@ -22,7 +22,6 @@ jobs:
               pull_number: number,
             });
 
-            console.log(pr.data);
             console.log('::set-output name=head-sha::' + pr.data.head.sha);
             console.log('::set-output name=base-sha::' + pr.data.base.sha);
 
