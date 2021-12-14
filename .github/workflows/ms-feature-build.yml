@@ -67,7 +67,7 @@ jobs:
 
   share-results:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [prepare-pr-build, build]
 
     steps:
       - name: Share status
