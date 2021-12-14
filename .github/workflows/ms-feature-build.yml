@@ -53,6 +53,21 @@ jobs:
         with:
           ref: ${{ steps.sha.outputs.result }}
 
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+
+      - name: Build MS
+        with:
+          script: |
+            cd services/${{ needs.prepare-pr-build.outputs.microservice-name }} &&
+            dotnet build
+
+      - name: Run unit tests
+        with:
+          script: |
+            cd services/${{ needs.prepare-pr-build.outputs.microservice-name }} &&
+            dotnet test
+
       - name: Share status
         uses: actions/github-script@v4
         with:
