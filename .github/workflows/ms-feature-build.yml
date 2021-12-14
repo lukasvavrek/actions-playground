@@ -17,7 +17,10 @@ jobs:
     steps:
       - name: Parse microservice name
         id: parse-ms-name
-        run: echo "::set-output name=ms-name::Ordering"
+        shell: pwsh
+        run: |
+          $ms_name = "${{ github.event.comment.body }}".Split(" ")[1];
+          echo "::set-output name=ms-name::$ms_name"
       - name: Mark comment
         uses: actions/github-script@v4
         with:
