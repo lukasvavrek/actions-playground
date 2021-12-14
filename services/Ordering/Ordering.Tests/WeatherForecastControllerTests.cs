@@ -21,7 +21,7 @@ namespace Ordering.Tests
 
             var result = controller.Get();
 
-            Assert.That(result.Count() == 6);
+            Assert.That(result.Count() == 5);
         }
     }
 }
